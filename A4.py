@@ -8,6 +8,8 @@ class NeuralNetwork:
     def __init__ (self, ):
         self.inputLayer = []
 
+
+
 print("Lucian Tranc's MNIST Nerual Network")
 
 # Overview of next steps:
@@ -20,11 +22,35 @@ data = [] # initialize data array
 file = open('data/mnist_train.csv', 'r') # open file object
 file.readline() # skip the first line
 for d in file:
-    data.append(d)
+    d = d[:-1]
+    split = d.split(",")
+    data.append([split[0], split[1:]])
 
 print(data[0])
-print(data[1])
-print("length: " + str(len(data)))
+print("length data: " + str(len(data)))
+print("length data[0]: " + str(len(data[0])))
+print("length data[0][1]: " + str(len(data[0][1])))
+
+# start by implementing using an iterative approach and then encapsulate it in a class
+
+firstLayerCount = 16
+secondLayerCount = 16
+
+# each input node will need a wieght going to each node in the first layer
+
+# 784 * 16 weights going from input layer to first hidden layer
+# 16 * 16 weights going from the first to the second hidden layer
+# 16 * 10 weights going from second hidden layer to the ouput layer
+
+# initialize the arrays of weights to random values
+
+
+for image in data:
+    inputLayer = image[1]
+
+inputLayer = []
+
+
 
 
 
