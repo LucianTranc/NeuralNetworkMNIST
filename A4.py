@@ -12,7 +12,7 @@ file.readline() # skip the first line
 for d in file:
     d = d[:-1]
     split = d.split(",")
-    data.append([split[0], split[1:]])
+    data.append([split[0], np.asarray(split[1:], float)])
 
 
 # this array specifies the number of nodes on each layer.
@@ -33,6 +33,35 @@ for i in range(1, len(nodesPerLayer)):
 
 print("Biases:")
 print(biases)
+
+# to run a peice of data through the network, I need to multiply each value in the 
+# input layer by the weight associated with the first hidden layer.
+# I organized the arrays to have 16 arrays of 784 which means I can loop through each index
+
+# weights: [Input to hidden layer 1: [layer 1 node 1 to input layer weights: [], ...], 
+#           hidden layer 1 to hidden layer 2: [],
+#           hidden layer 2 to ouput layer:[]]
+
+# need to do vector multiplication between weights[0][node] and d
+
+print("WEIGHTS[0][0]")
+print(weights[0][0])
+print(len(weights[0][0]))
+
+print("DATA[0][1]")
+print(data[0][1])
+print(len(data[0][1]))
+
+for d in data:
+    nodes = [d[1], ]
+    for i in range(1, len(nodesPerLayer)):
+        sum = 0
+    
+print("DATA[0][1] * weights[0][0]")
+print(np.multiply(data[0][1], weights[0][0]))
+
+
+
 
 
 # i have an array of random weights and random biases based on an array that specifies how many nodes will be in each layer.
