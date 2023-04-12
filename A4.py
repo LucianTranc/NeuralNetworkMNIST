@@ -1,22 +1,10 @@
 import numpy as np
+import random
 
-# neural network class. For now I will hardcode 2 hidden layers of size 16
-# I need to represent all the nodes, grouped in layers
-# I need to represent all the weights between each layer
-# I need to represent the bias of each node in each layer
-class NeuralNetwork:
-    def __init__ (self, ):
-        self.inputLayer = []
-
-
+def sigmoid(z):
+    return 1 / (1 + np.exp(-z))
 
 print("Lucian Tranc's MNIST Nerual Network")
-
-# Overview of next steps:
-
-#   Set up input layer
-#       This will just be an array of length 784.
-#       Create a function that loads in an mnist datapoint into the array
 
 data = [] # initialize data array
 file = open('data/mnist_train.csv', 'r') # open file object
@@ -26,29 +14,34 @@ for d in file:
     split = d.split(",")
     data.append([split[0], split[1:]])
 
-print(data[0])
-print("length data: " + str(len(data)))
-print("length data[0]: " + str(len(data[0])))
-print("length data[0][1]: " + str(len(data[0][1])))
 
-# start by implementing using an iterative approach and then encapsulate it in a class
+# this array specifies the number of nodes on each layer.
+nodesPerLayer = [28*28, 16, 16, 10]
 
-firstLayerCount = 16
-secondLayerCount = 16
+weights = []
 
-# each input node will need a wieght going to each node in the first layer
+for i in range(1, len(nodesPerLayer)):
+    weights.append(sigmoid(np.random.randn(nodesPerLayer[i], nodesPerLayer[i-1])))
 
-# 784 * 16 weights going from input layer to first hidden layer
-# 16 * 16 weights going from the first to the second hidden layer
-# 16 * 10 weights going from second hidden layer to the ouput layer
+print("Weights:")
+print(weights)
 
-# initialize the arrays of weights to random values
+biases = []
+
+for i in range(1, len(nodesPerLayer)):
+    biases.append(sigmoid(np.random.randn(nodesPerLayer[i])))
+
+print("Biases:")
+print(biases)
 
 
-for image in data:
-    inputLayer = image[1]
+# i have an array of random weights and random biases based on an array that specifies how many nodes will be in each layer.
 
-inputLayer = []
+# technically, I have created a neural network. I could run the testing data through this network, and get an accuracy of 10%.
+# I'm going to try this, and then compare it to a network I find online.
+
+# the first step in running the neural network is to start with the data as the first layer
+# each node in the second layer gets calculated by summing all the products of the weights and the values in each input node.
 
 
 
