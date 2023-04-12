@@ -1,9 +1,30 @@
 import numpy as np
 import random
 
+#    nodes = forward_propogation(input, nodesPerLayer, weights, biases)
+
+def forward_propogation(input, nodesPerLayer, weights, biases):
+
+    # initialize empty set of nodes
+    nodes = []
+    for nodeCount in nodesPerLayer:
+        nodes.append(np.zeros(nodeCount, float))
+    
+    nodes[0] = input
+
+    nodeIndex = 0
+    layerIndex = 1
+    nodes[layerIndex][nodeIndex] = nodes[layerIndex-1] * weights[0]
+    
+
+
+
+
+    return 0
+
 def sigmoid(z):
     return 1 / (1 + np.exp(-z))
-
+    
 print("Lucian Tranc's MNIST Nerual Network")
 
 data = [] # initialize data array
@@ -17,6 +38,7 @@ for d in file:
 
 # this array specifies the number of nodes on each layer.
 nodesPerLayer = [28*28, 16, 16, 10]
+
 
 weights = []
 
@@ -53,12 +75,16 @@ print(data[0][1])
 print(len(data[0][1]))
 
 for d in data:
-    nodes = [d[1], ]
-    for i in range(1, len(nodesPerLayer)):
-        sum = 0
-    
-print("DATA[0][1] * weights[0][0]")
-print(np.multiply(data[0][1], weights[0][0]))
+    label = d[0]
+    input = d[1]
+
+    # At this point I have a list of nodes where the first layer is set to the input.
+    # I also have a sets of random weights and biases.
+    # I want to run a forward propogation. the forward propogation needs to keep the values
+    # of the nodes.
+
+    # gets the state of all the nodes
+    nodes = forward_propogation(input, nodesPerLayer, weights, biases)
 
 
 
