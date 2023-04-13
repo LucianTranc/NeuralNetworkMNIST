@@ -4,8 +4,11 @@ import random
 def sigmoid(z):
     return 1 / (1 + np.exp(-z))
 
+def calculate_error(output, expected_result):
+    expected_array = np.zeros(10)
+    expected_array[expected_result] = 1
+    return np.sum(np.square(np.subtract(expected_array, output)))
 
-#    nodes = forward_propogation(input, nodesPerLayer, weights, biases)
 
 def forward_propagation(input, nodesPerLayer, weights, biases):
 
@@ -33,7 +36,7 @@ file.readline() # skip the first line
 for d in file:
     d = d[:-1]
     split = d.split(",")
-    data.append([split[0], np.asarray(split[1:], float)/255])
+    data.append([int(split[0]), np.asarray(split[1:], float)/255])
 
 
 # this array specifies the number of nodes on each layer.
@@ -66,10 +69,6 @@ print(biases)
 
 # need to do vector multiplication between weights[0][node] and d
 
-# for d in data:
-label = data[0][0]
-input = data[0][1]
-
 # At this point I have a list of nodes where the first layer is set to the input.
 # I also have a sets of random weights and biases.
 # I want to run a forward propogation. the forward propogation needs to keep the values
@@ -77,8 +76,24 @@ input = data[0][1]
 
 # gets the state of all the nodes
 
-nodes = forward_propagation(input, nodesPerLayer, weights, biases)
+error = 0
 
+
+
+loopLimiter = 0
+for d in data:
+    nodes = forward_propagation(d[1], nodesPerLayer, weights, biases)
+    error = error + calculate_error(nodes[len(nodesPerLayer)-1], d[0])
+
+    # calculate the error rate
+
+print("total error: " + str(error))
+
+# at this point we have the total error of the cost function
+
+# we need to calculate the gradient vector of the cost function and apply it to the weights to nudge it in the right direction
+# This can be thought of as deltaW (the vector storing the change we need for each weight)
+# deltaW can be computed by multiplying (learning rate) x (output/activating of previous layer node) x (derivate of sigmoid(current node) x sum(weights x (error X derivative of sigmod(k))))
 
 
 
