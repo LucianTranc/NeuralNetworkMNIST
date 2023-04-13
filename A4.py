@@ -7,7 +7,7 @@ def sigmoid(z):
 
 #    nodes = forward_propogation(input, nodesPerLayer, weights, biases)
 
-def forward_propogation(input, nodesPerLayer, weights, biases):
+def forward_propagation(input, nodesPerLayer, weights, biases):
 
     # initialize empty set of nodes
     nodes = []
@@ -22,6 +22,8 @@ def forward_propogation(input, nodesPerLayer, weights, biases):
         for nodeIndex in range(0, len(weights[layerIndex - 1])):
             nodes[layerIndex][nodeIndex] = sigmoid(np.sum(np.multiply(nodes[layerIndex - 1], weights[layerIndex - 1][nodeIndex])) + biases[layerIndex-1][nodeIndex])
     return nodes
+
+
     
 print("Lucian Tranc's MNIST Nerual Network")
 
@@ -31,7 +33,7 @@ file.readline() # skip the first line
 for d in file:
     d = d[:-1]
     split = d.split(",")
-    data.append([split[0], np.asarray(split[1:], float)])
+    data.append([split[0], np.asarray(split[1:], float)/255])
 
 
 # this array specifies the number of nodes on each layer.
@@ -74,7 +76,8 @@ input = data[0][1]
 # of the nodes.
 
 # gets the state of all the nodes
-nodes = forward_propogation(input, nodesPerLayer, weights, biases)
+
+nodes = forward_propagation(input, nodesPerLayer, weights, biases)
 
 
 
