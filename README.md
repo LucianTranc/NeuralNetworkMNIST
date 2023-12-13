@@ -8,6 +8,17 @@ In the era of powerful machine learning libraries like TensorFlow and PyTorch, i
 
 Building a neural network from scratch gives us a deeper understanding of the inner workings of neural networks. It helps us appreciate the complexity behind these powerful tools and can provide insights that are useful when designing and debugging neural networks in the future.
 
+## Results
+
+The neural network achieved a maximum accuracy of 97.69% on the testing set.
+
+The progress of the network's learning can be visualized through the accuracy plots generated during the training process. These plots show the testing accuracy of the network over different epochs.
+
+![Testing Accuracy With 200 Hidden Nodes:](graphs/Testing_Accuracy_200.png)
+
+This graph shows the testing accuracy for a specific configuration of the network. The x-axis represents the epochs, and the y-axis represents the testing accuracy. 
+
+
 ## Key Components of the Network
 
 The `network.py` file contains the implementation of the neural network. Here are some key parts:
@@ -16,7 +27,7 @@ The `network.py` file contains the implementation of the neural network. Here ar
 
 I have included a copy of the MNIST handwritten digit dataset in the 'data' folder. Once unzipped, it includes a training set and a testing set in a csv format. To extract the data and parse the csv file we can do the following:
 
-```
+```python
 data = [] # initialize data array
 file = open('data/mnist_train.csv', 'r') # open file object
 file.readline() # skip the first line
@@ -30,7 +41,7 @@ for d in file:
 
 It is common to see a neural network visualized an a graph like structure with nodes and edges. However, actually implementing a neural network this way is not efficient at all. Instead, we can store an array of the weights and biases. If we know the structure of the neural net, we can use this information to reconstruct the model at any time. The following code initializes arrays for the weights and biases to random values. The weights are truncated between -1 and 1
 
-```
+```python
     # initialize the weights and biases
     weights = []
     biases = []
@@ -45,7 +56,7 @@ It is common to see a neural network visualized an a graph like structure with n
 
 In forward propagation, we calculate the output of the network for a given input. This involves passing the input through each layer, applying the weights and biases, and then the activation function. Here's how we implement this in the code:
 
-```
+```python
 # forward propogation function
 def forward_propagation(input, nodesPerLayer, weights, biases):
 
@@ -68,7 +79,7 @@ def forward_propagation(input, nodesPerLayer, weights, biases):
 
 Backward propagation is used to update the weights and biases of the network. It calculates the gradient of the loss function with respect to the network's parameters (weights and biases). Here's the implementation:
 
-```
+```python
 # backward propagation function
 def backward_propagation(output, expected_result, nodesPerLayer, weights, biases):
 
@@ -96,7 +107,7 @@ def backward_propagation(output, expected_result, nodesPerLayer, weights, biases
 
 The training process involves repeatedly applying forward and backward propagation across multiple epochs. In each epoch, the network's parameters are adjusted to minimize the error between the actual output and the expected output.
 
-```
+```python
 # run the neural network with the given parameters and return the accuracies
 def run_neural_network(nodes_per_layer, learning_rate, epochs):
     # [initialization of weights, biases, and data not shown for brevity]
