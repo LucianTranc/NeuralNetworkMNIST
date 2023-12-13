@@ -193,6 +193,7 @@ To run the code, follow these steps:
 ```bash
 python network.py --learning_rates "[1, 0.5]" --hidden_layer_configs "[[10],[20]]" --epochs "4"
 ```
+    **Note that I'm using a few python packages to tie the whole thing together so you might need to pip install 'missing package' **
 4. Output the results:
 ```bash
 python graph.py test_results_10.csv
