@@ -196,8 +196,5 @@ python network.py --learning_rates "[1, 0.5]" --hidden_layer_configs "[[10],[20]
 4. Output the results:
 ```bash
 python graph.py test_results_10.csv
-```
-and
-```bash
 python graph.py test_results_20.csv
 ```
