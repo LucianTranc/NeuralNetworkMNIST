@@ -44,7 +44,7 @@ def forward_propagation(input, nodesPerLayer, weights, biases):
             output[layerIndex][nodeIndex] = sigmoid(np.sum(np.multiply(output[layerIndex - 1], weights[layerIndex - 1][nodeIndex])) + biases[layerIndex-1][nodeIndex])
     return output
 
-# backward propagation fnction
+# backward propagation function
 def backward_propagation(output, expected_result, nodesPerLayer, weights, biases):
 
     # initialize empty set of errors
@@ -151,15 +151,15 @@ for d in file:
 learning_rates = [0.01, 0.1, 0.25, 0.5, 0.75, 1.0]
 
 nodes_per_layer_configs = [
-    [28*28, 10],
-    [28*28, 50],
-    [28*28, 100],
-    [28*28, 200],
-    [28*28, 400],
-    [28*28, 800],
-    [28*28, 100, 50],
-    [28*28, 200, 100],
-    [28*28, 300, 100, 50]
+    [28*28, 10, 10],
+    [28*28, 50, 10],
+    [28*28, 100, 10],
+    [28*28, 200, 10],
+    [28*28, 400, 10],
+    [28*28, 800, 10],
+    [28*28, 100, 50, 10],
+    [28*28, 200, 100, 10],
+    [28*28, 300, 100, 50, 10]
 ]
 
 epochs = 20

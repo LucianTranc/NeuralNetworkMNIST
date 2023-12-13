@@ -125,8 +125,71 @@ def run_neural_network(nodes_per_layer, learning_rate, epochs):
     return [testing_accuracy, time_taken]
 ```
 
+### Testing The Network
+
+The final section of the neural network script focuses on evaluating the performance of the network under different configurations. This involves testing various combinations of learning rates and node configurations, and then outputting the results to CSV files for analysis.
+
+Here are some example testing parameters:
+
+```python
+learning_rates = [0.01, 0.1, 0.25, 0.5, 0.75, 1.0]
+
+nodes_per_layer_configs = [
+    [28*28, 10, 10],
+    [28*28, 50, 10],
+    [28*28, 100, 10],
+    [28*28, 200, 10],
+    [28*28, 400, 10],
+    [28*28, 800, 10],
+    [28*28, 100, 50, 10],
+    [28*28, 200, 100, 10],
+    [28*28, 300, 100, 50, 10]
+]
+
+epochs = 20
+```
+
+**Note that the script running as defined here would talk many hours to run. This configuration is more useful when experimenting with smaller models**
+
+We then loop over each configuration and store the results in a csv file:
+
+```python
+for nodes_per_layer in nodes_per_layer_configs:
+    hidden_layer_sizes = '_'.join(map(str, nodes_per_layer[1:-1]))
+    
+    with open(f'test_results_{hidden_layer_sizes}.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(rows)
+
+        for learning_rate in learning_rates:
+            testing_accuracy, training_time = run_neural_network(nodes_per_layer, learning_rate, epochs)
+            writer.writerow([learning_rate] + testing_accuracy + [training_time])
+
+```
+
+### Creating Graphs with matplotlib
+
+The `graph.py` script allows you to create visual representations of the neural network's performance using the data stored in CSV files. It generates plots showing the testing accuracy for each learning rate over the epochs, which helps in analyzing the effectiveness of different configurations.
+
+The script uses pandas, matplotlib, and argparse libraries to read the CSV files, process the data, and plot the results. The best test case was shown at the beginning of this document, but here are some more examples:
+
+![Testing Accuracy With 100 Hidden Nodes:](graphs/Testing_Accuracy_100.png)
+![Testing Accuracy With 400 Hidden Nodes:](graphs/Testing_Accuracy_400.png)
+![Testing Accuracy With 800 Hidden Nodes:](graphs/Testing_Accuracy_800.png)
+
 
 ## Conclusion
 
-Building a neural network from scratch is a valuable exercise that can deepen your understanding of neural networks. This project demonstrates how to do it using Python and NumPy.
+This project showcases the process of building a neural network from scratch using Python and NumPy. By implementing the core concepts of neural networks (forward propagation, backward propagation), we gain a deeper understanding of these powerful machine learning models. The project also demonstrates the application of this neural network on the MNIST Handwritten Digits Dataset, achieving a respectable accuracy. The generated graphs provide a visual representation of the network's learning process, further enhancing our understanding of how neural networks learn from data.
 
+## Running the Code
+
+To run the code, follow these steps:
+
+1. Ensure you have Python and NumPy installed on your system, I used Python 3.11
+2. Once you clone the repo, make sure you unzip the dataset in the data folder
+3. 
+4.
+5. Run the `network.py` script using `python network.py`.
+
+Please note that you may need to adjust the parameters within the `network.py` script to suit your specific needs, such as the number of nodes per layer, the learning rate, and the number of epochs.

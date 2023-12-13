@@ -5,7 +5,7 @@ import datetime
 import re
 
 # Create an argument parser
-parser = argparse.ArgumentParser(description='Plot the mean testing accuracy for each learning rate')
+parser = argparse.ArgumentParser(description='Plot the testing accuracy for each learning rate')
 parser.add_argument('csv_file', type=str, help='The CSV file to process')
 
 # Parse the command line arguments
