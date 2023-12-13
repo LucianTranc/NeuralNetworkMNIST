@@ -59,7 +59,7 @@ def backward_propagation(output, expected_result, nodesPerLayer, weights, biases
     for layerIndex in range(len(nodesPerLayer) - 2, 0, -1):
         errors[layerIndex] = sigmoid_derivative(np.dot(weights[layerIndex - 1], output[layerIndex - 1]) + biases[layerIndex - 1]) * np.dot(errors[layerIndex + 1], weights[layerIndex])
     
-    # gradient calculations
+    # calculate the gradient of the weights and biases
     gradient_weights = []
     gradient_biases = []
     for layerIndex in range(len(nodesPerLayer) - 1):
@@ -85,12 +85,12 @@ def run_neural_network(nodes_per_layer, learning_rate, epochs):
     # initialize the weight and bias deltas
     weight_delta = []
     bias_delta = []
+
     for i in range(1, len(nodes_per_layer)):
         weight_delta.append(np.zeros((nodes_per_layer[i], nodes_per_layer[i-1])))
     for i in range(1, len(nodes_per_layer)):
         bias_delta.append(np.zeros(nodes_per_layer[i]))
 
-    training_accuracy = []
     testing_accuracy = []
 
     # Start the timer
@@ -116,22 +116,17 @@ def run_neural_network(nodes_per_layer, learning_rate, epochs):
                 biases[i] -= bias_gradient[i] * learning_rate
 
         # testing code
-
         correct = 0
-
         for d in testing_data:
             output = forward_propagation(d[1], nodes_per_layer, weights, biases)
             index_max = np.argmax(output[len(nodes_per_layer)-1])
             if (d[0] == index_max):
                 correct += 1
-
         testing_accuracy.append(correct / len(testing_data))
     
     # Stop the timer
     end_time = time.time()
-
     time_taken = end_time - start_time
-
     return [testing_accuracy, time_taken]
 
 
@@ -151,55 +146,35 @@ for d in file:
     split = d.split(",")
     testing_data.append([int(split[0]), np.asarray(split[1:], float)/255])
 
-# 88.19% accuracy after 18 epochs
-# nodesPerLayer = [28*28, 512, 10]
-# learningRate = 1
-
-# 97.54% accuracy after 18 epochs
-# nodesPerLayer = [28*28, 512, 10]
-# learningRate = 0.7
-
-# 97.14% accuracy after 14 epochs
-# nodesPerLayer = [28*28, 200, 10]
-# learningRate = 0.5
-
-# 96.54% accuracy after 14 epochs
-# nodesPerLayer = [28*28, 50, 10]
-# learningRate = 0.5
-
-# 96.25% accuracy after 9 epochs
-# nodesPerLayer = [28*28, 50, 10]
-# learningRate = 1
-
-# 95.21% accuracy after 10 epochs - Took forever to train
-# nodesPerLayer = [28*28, 200, 80, 10]
-# learningRate = 0.1
-
-
 
 # Define the range of values for each parameter
-learning_rates = [1]
+learning_rates = [0.01, 0.1, 0.25, 0.5, 0.75, 1.0]
 
 nodes_per_layer_configs = [
-    [28*28, 300, 100, 50, 10]
+    [28*28, 10],
+    [28*28, 50],
+    [28*28, 100],
+    [28*28, 200],
+    [28*28, 400],
+    [28*28, 800],
+    [28*28, 100, 50],
+    [28*28, 200, 100],
+    [28*28, 300, 100, 50]
 ]
 
 epochs = 20
 
+# Create the header row for the CSV file
 rows = []
 rows.append('Learning Rate')
-
 for i in range(epochs):
     rows.append(f"Testing Accuracy (Epoch {i+1})")
-
 rows.append('Training Time')
-
-
-
 
 # Loop over all combinations of parameters
 for nodes_per_layer in nodes_per_layer_configs:
 
+    # Create a string representation of the hidden layer sizes
     hidden_layer_sizes = '_'.join(map(str, nodes_per_layer[1:-1]))
 
     # Open a separate CSV file for each configuration of nodes per layer
