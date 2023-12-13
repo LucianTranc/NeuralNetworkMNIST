@@ -1,8 +1,9 @@
-# Lucian Tranc 1045249
 import numpy as np
 from tqdm import tqdm
 import time
 import csv
+import argparse
+import ast
 
 # sigmoid function
 def sigmoid(z):
@@ -147,22 +148,21 @@ for d in file:
     testing_data.append([int(split[0]), np.asarray(split[1:], float)/255])
 
 
-# Define the range of values for each parameter
-learning_rates = [0.01, 0.1, 0.25, 0.5, 0.75, 1.0]
+# Create the parser
+parser = argparse.ArgumentParser(description='Neural Network Parameters')
 
-nodes_per_layer_configs = [
-    [28*28, 10, 10],
-    [28*28, 50, 10],
-    [28*28, 100, 10],
-    [28*28, 200, 10],
-    [28*28, 400, 10],
-    [28*28, 800, 10],
-    [28*28, 100, 50, 10],
-    [28*28, 200, 100, 10],
-    [28*28, 300, 100, 50, 10]
-]
+# Add the arguments
+parser.add_argument('--learning_rates', type=ast.literal_eval, help='Learning rates for the network')
+parser.add_argument('--hidden_layer_configs', type=ast.literal_eval, help='Hidden layer configurations for the network')
+parser.add_argument('--epochs', type=int, help='Number of epochs for the network')
 
-epochs = 20
+# Parse the arguments
+args = parser.parse_args()
+
+# Extract the parameters
+learning_rates = args.learning_rates
+nodes_per_layer_configs = [[28*28] + config + [10] for config in args.hidden_layer_configs]
+epochs = args.epochs
 
 # Create the header row for the CSV file
 rows = []
@@ -176,6 +176,8 @@ for nodes_per_layer in nodes_per_layer_configs:
 
     # Create a string representation of the hidden layer sizes
     hidden_layer_sizes = '_'.join(map(str, nodes_per_layer[1:-1]))
+    if (nodes_per_layer == [28*28, 10]):
+        hidden_layer_sizes = '0'
 
     # Open a separate CSV file for each configuration of nodes per layer
     with open(f'test_results_{hidden_layer_sizes}.csv', 'w', newline='') as file:

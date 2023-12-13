@@ -37,7 +37,7 @@ for name, group in grouped:
 
     time = group['Training Time']
 
-    training_time = datetime.timedelta(seconds=int(time))
+    training_time = datetime.timedelta(seconds=int(time.iloc[0]))
 
     # Plot the testing accuracies versus the epochs
     plt.plot(epochs, testing_accuracies, marker='o', linestyle='-', label=f'Learning Rate: {name}, Max Accuracy: {max_accuracy:.4f}, Training Time: {training_time}')

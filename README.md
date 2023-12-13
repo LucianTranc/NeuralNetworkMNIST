@@ -174,9 +174,10 @@ The `graph.py` script allows you to create visual representations of the neural 
 The script uses pandas, matplotlib, and argparse libraries to read the CSV files, process the data, and plot the results. The best test case was shown at the beginning of this document, but here are some more examples:
 
 ![Testing Accuracy With 100 Hidden Nodes:](graphs/Testing_Accuracy_100.png)
-![Testing Accuracy With 400 Hidden Nodes:](graphs/Testing_Accuracy_400.png)
-![Testing Accuracy With 800 Hidden Nodes:](graphs/Testing_Accuracy_800.png)
 
+![Testing Accuracy With 400 Hidden Nodes:](graphs/Testing_Accuracy_400.png)
+
+![Testing Accuracy With 800 Hidden Nodes:](graphs/Testing_Accuracy_800.png)
 
 ## Conclusion
 
@@ -186,10 +187,17 @@ This project showcases the process of building a neural network from scratch usi
 
 To run the code, follow these steps:
 
-1. Ensure you have Python and NumPy installed on your system, I used Python 3.11
-2. Once you clone the repo, make sure you unzip the dataset in the data folder
-3. 
-4.
-5. Run the `network.py` script using `python network.py`.
-
-Please note that you may need to adjust the parameters within the `network.py` script to suit your specific needs, such as the number of nodes per layer, the learning rate, and the number of epochs.
+1. Ensure you have Python3, I used Python 3.11
+2. Unzip the dataset in the data folder
+3. Run a neural network configuration of your choosing using the following format:
+```bash
+python network.py --learning_rates "[1, 0.5]" --hidden_layer_configs "[[10],[20]]" --epochs "4"
+```
+4. Output the results:
+```bash
+python graph.py test_results_10.csv
+```
+and
+```bash
+python graph.py test_results_20.csv
+```
