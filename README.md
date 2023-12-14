@@ -25,6 +25,10 @@ The `network.py` file contains the implementation of the neural network. Here ar
 
 ### Loading The MNIST Data
 
+The MNIST Dataset consists of 28 x 28 greyscale images like these:
+
+![Example of MNIST Data:](graphs/MNIST_Data.png)
+
 I have included a copy of the MNIST handwritten digit dataset in the 'data' folder. Once unzipped, it includes a training set and a testing set in a csv format. To extract the data and parse the csv file we can do the following:
 
 ```python
